@@ -2,4 +2,5 @@
 Data science project
 
 Notes:
-    - Please `mkdir Data Data/DataIn Data/pickles`
+    - This requires `Pandas` and the `numpy/scipy` stack.
+    - Please `mkdir Data Data/DataIn Data/pickles` upon cloning.
