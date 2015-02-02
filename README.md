@@ -1,5 +1,5 @@
 # healthdata
-Data science project
+Data Science Spring 2015 (Olin College)
 
 Notes:
 - This requires `Pandas` and the `numpy/scipy` stack.
