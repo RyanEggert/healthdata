@@ -55,3 +55,5 @@ target/
 
 # Raw data folder
 /Data
+/thinkplot.py
+/thinkstats2.py
