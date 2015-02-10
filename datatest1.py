@@ -30,4 +30,4 @@ for index, var in enumerate(H155.varnames):
 print errorlist
 with open('graphs/cdftests2/errorlog.txt', 'wb+') as wrfile:
     for err in errorlist:
-        thefile.write("%s\n" % err)
+        wrfile.write("%s\n" % err)
