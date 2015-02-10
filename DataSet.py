@@ -93,8 +93,9 @@ class DataSet_(object):
 
 class Variable(object):
 
-    """Creates a Variable object which contains information relating to a specific MEPS variable.
-    A number of Variable objects are attributes of a DataSet object.
+    """Creates a Variable object which contains information relating to a
+    specific MEPS variable. A number of Variable objects are attributes
+    of a DataSet object.
     """
 
     def __init__(self, datasetname, varabbv, varlongname):
@@ -136,7 +137,7 @@ class Variable(object):
             # Store JSON response as python data structures.
             jsonret = req.json()
         except ValueError, e:
-            print 'ERROR: WEB SERVER TIMEOUT'
+            print '\nERROR: WEB SERVER TIMEOUT'
             print req
             raise e
         else:
@@ -163,7 +164,7 @@ def regeneratefullcache():
 
 def main():
     # Opens the h152 DataSet object from its cached pickle.
-    dset = DataSet('h152h.pkl')
+    dset = DataSet('h156.pkl', True)
 
 
 if __name__ == '__main__':
