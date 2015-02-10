@@ -164,7 +164,7 @@ def regeneratefullcache():
 
 def main():
     # Opens the h152 DataSet object from its cached pickle.
-    dset = DataSet('h156.pkl', True)
+    dset = DataSet('h156.pkl')
 
 
 if __name__ == '__main__':
