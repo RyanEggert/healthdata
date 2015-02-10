@@ -1,6 +1,6 @@
 http://meps.ahrq.gov/mepsweb/data_stats/download_data/pufs/h152c/h152csu.txt
 
-LABEL DUID    ='DWELLING UNIT ID'
+      DUID    ='DWELLING UNIT ID'
       PID     ='PERSON NUMBER'
       DUPERSID='PERSON ID (DUID + PID)'
       EVNTIDX ='EVENT ID'

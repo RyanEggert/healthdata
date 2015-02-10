@@ -1,6 +1,6 @@
 http://meps.ahrq.gov/mepsweb/data_stats/download_data/pufs/h152h/h152hspu.txt
 
-LABEL DUID    ='DWELLING UNIT ID'
+      DUID    ='DWELLING UNIT ID'
       PID     ='PERSON NUMBER'
       DUPERSID='PERSON ID (DUID + PID)'
       EVNTIDX ='EVENT ID'
@@ -69,7 +69,7 @@ LABEL DUID    ='DWELLING UNIT ID'
       VARSTR  ='VARIANCE ESTIMATION STRATUM, 2012'
       VARPSU  ='VARIANCE ESTIMATION PSU, 2012'
 
-      VALUE CNAF
+VALUE CNAF
   -9 = '-9 NOT ASCERTAINED'
   -8 = '-8 DK'
   -7 = '-7 REFUSED'

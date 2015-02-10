@@ -1,0 +1,11 @@
+
+
+dset.varlookup('varname') (EMGVST42)
+
+variable[name] = 'EMGVST42'
+variable[fullname] = 'Emergency Room Visits'
+variable[values] = [1: 'Code', 5: 'Code this', ...]
+variable[specials] = [-1: 'ERR CODE', -9: '-9 Err code', ...]
+
+variable[recodes] = [list vars which are related]
+

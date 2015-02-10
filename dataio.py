@@ -5,6 +5,8 @@ import os
 import tables
 
 # take data from csv to dataframe (first import) and pickle it
+
+
 def firstimport(csvfilename):
     """Given the name of a csv file [string] in the DataIn folder, this opens
     the .csv as a Pandas dataframe."""
@@ -16,6 +18,8 @@ def firstimport(csvfilename):
     newDF.to_pickle(pickleloc)
 
 # open dataframe from pickle
+
+
 def importdata(picklefilename):
     """Imports the given pickle file name from the pickles folder and returns
     it as a dataframe"""
@@ -39,7 +43,6 @@ def main(csv):
     df2 = importdata('test.pkl')
     print df2
     savedata(df2, 'test2.pkl')
-
 
 
 if __name__ == '__main__':

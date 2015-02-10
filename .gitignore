@@ -54,6 +54,9 @@ docs/_build/
 target/
 
 # Raw data folder
-/Data
+/Data/***/
 /thinkplot.py
 /thinkstats2.py
+/config.py
+/dataset_store
+/test*.py
