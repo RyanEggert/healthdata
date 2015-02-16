@@ -15,9 +15,9 @@ def search_vars(vartype, vars):
 
     Returns: list of matches -- list of strings 
     """
-    diag = re.compile('[A-Z]+DX')            #compiles regular expressions to search
-    tot_exp = re.compile('TOT[A-Z]+12')
-    age_diag = re.compile('[A-Z]+AGED')
+    diag = re.compile('[A-Z]+DX[0-9]*')            #compiles regular expressions to search
+    tot_exp = re.compile('TOT[A-Z]+12[0-9]*')
+    age_diag = re.compile('[A-Z]+AGED[0-9]*')
 
 
 
@@ -38,7 +38,7 @@ def search_vars(vartype, vars):
 def main():
     dset = DataSet.DataSet('h155.pkl')        #loads dataset, list of variables in dataset as list of strings
     vars = dset.varnames
-    print search_vars('diagnosis', vars)       #searches through the HC-155 dataset for age of diagnosis variables
+    print search_vars('age of diagnosis', vars)       #searches through the HC-155 dataset for age of diagnosis variables
 
 
 if __name__ == '__main__':
