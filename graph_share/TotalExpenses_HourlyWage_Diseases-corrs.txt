@@ -1,0 +1,16 @@
+The correlation between HRWG31X and TOTEXP12 for HIEUIDX is   nan
+The correlation between HRWG31X and TOTEXP12 for DIABDX is 0.007074
+The correlation between HRWG31X and TOTEXP12 for ADHDADDX is -0.251199
+The correlation between HRWG31X and TOTEXP12 for HIBPDX is 0.029002
+The correlation between HRWG31X and TOTEXP12 for STRKDX is -0.028927
+The correlation between HRWG31X and TOTEXP12 for BMINDX53 is   nan
+The correlation between HRWG31X and TOTEXP12 for CHDDX is 0.151475
+The correlation between HRWG31X and TOTEXP12 for BPMLDX is 0.024423
+The correlation between HRWG31X and TOTEXP12 for CANCERDX is 0.002626
+The correlation between HRWG31X and TOTEXP12 for CHOLDX is 0.005189
+The correlation between HRWG31X and TOTEXP12 for MIDX is -0.035998
+The correlation between HRWG31X and TOTEXP12 for ARTHDX is 0.034741
+The correlation between HRWG31X and TOTEXP12 for ASTHDX is 0.035253
+The correlation between HRWG31X and TOTEXP12 for OHRTDX is 0.016247
+The correlation between HRWG31X and TOTEXP12 for EMPHDX is 0.143984
+The correlation between HRWG31X and TOTEXP12 for ANGIDX is 0.114299
