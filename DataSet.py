@@ -1,4 +1,4 @@
-# varlook.py #
+"""varlook.py"""
 import os
 import pandas as pd
 import re
@@ -29,7 +29,6 @@ def DataSet(picklefilename, new=False):
             print "\"%s\" does not yet exist. Please create this file by instantiating this object once with new=True" % (existname)
             raise e
         else:
-            print existobj
             return existobj     # Return unpickled object
     else:
         dset = DataSet_(picklefilename)
