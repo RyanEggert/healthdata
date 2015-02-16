@@ -1,0 +1,16 @@
+The correlation between OBTOTV12 and TOTSLF12 for HIEUIDX is   nan
+The correlation between OBTOTV12 and TOTSLF12 for DIABDX is 0.114887
+The correlation between OBTOTV12 and TOTSLF12 for ADHDADDX is 0.153906
+The correlation between OBTOTV12 and TOTSLF12 for HIBPDX is 0.179011
+The correlation between OBTOTV12 and TOTSLF12 for STRKDX is 0.079967
+The correlation between OBTOTV12 and TOTSLF12 for BMINDX53 is   nan
+The correlation between OBTOTV12 and TOTSLF12 for CHDDX is 0.034236
+The correlation between OBTOTV12 and TOTSLF12 for BPMLDX is 0.175123
+The correlation between OBTOTV12 and TOTSLF12 for CANCERDX is 0.228288
+The correlation between OBTOTV12 and TOTSLF12 for CHOLDX is 0.215597
+The correlation between OBTOTV12 and TOTSLF12 for MIDX is 0.039631
+The correlation between OBTOTV12 and TOTSLF12 for ARTHDX is 0.177723
+The correlation between OBTOTV12 and TOTSLF12 for ASTHDX is 0.341409
+The correlation between OBTOTV12 and TOTSLF12 for OHRTDX is 0.263277
+The correlation between OBTOTV12 and TOTSLF12 for EMPHDX is 0.056543
+The correlation between OBTOTV12 and TOTSLF12 for ANGIDX is 0.195137

@@ -1,0 +1,16 @@
+The correlation between TOTEXP12 and TOTSLF12 for HIEUIDX is   nan
+The correlation between TOTEXP12 and TOTSLF12 for DIABDX is 0.242630
+The correlation between TOTEXP12 and TOTSLF12 for ADHDADDX is 0.110691
+The correlation between TOTEXP12 and TOTSLF12 for HIBPDX is 0.269488
+The correlation between TOTEXP12 and TOTSLF12 for STRKDX is 0.268204
+The correlation between TOTEXP12 and TOTSLF12 for BMINDX53 is   nan
+The correlation between TOTEXP12 and TOTSLF12 for CHDDX is 0.273565
+The correlation between TOTEXP12 and TOTSLF12 for BPMLDX is 0.238658
+The correlation between TOTEXP12 and TOTSLF12 for CANCERDX is 0.332494
+The correlation between TOTEXP12 and TOTSLF12 for CHOLDX is 0.280230
+The correlation between TOTEXP12 and TOTSLF12 for MIDX is 0.263598
+The correlation between TOTEXP12 and TOTSLF12 for ARTHDX is 0.347596
+The correlation between TOTEXP12 and TOTSLF12 for ASTHDX is 0.322270
+The correlation between TOTEXP12 and TOTSLF12 for OHRTDX is 0.235535
+The correlation between TOTEXP12 and TOTSLF12 for EMPHDX is 0.400644
+The correlation between TOTEXP12 and TOTSLF12 for ANGIDX is 0.290911

@@ -14,10 +14,10 @@ df = H155.df
 
 diagnoses = search_vars('diagnosis', H155.varnames)
 
-xvariable = 'HRWG31X'
-xdescr = 'Hourly Wage'
-yvariable = 'TOTEXP12'
-ydescr = 'Total Yearly Healthcare Expenses'
+xvariable = 'OBTOTV12'
+xdescr = 'Number of office-based provider visits'
+yvariable = 'TOTSLF12'
+ydescr = 'Total Yearly Out-of-Pocket Healthcare Expenses'
 
 
 groups = []
@@ -33,12 +33,12 @@ for diagnosis in diagnoses:
 
 num_sets = len(groups)
 
-colors = cm.rainbow(np.linspace(0, 1, num_sets))
+colors = cm.jet(np.linspace(0, 1, num_sets))
 
 for data, c in zip(groups, colors):
     tplt.Scatter(data['x'], data['y'], color=c, label=data['name'])
 tplt.Config(ylabel=groups[0]['ylabel'], xlabel=groups[0][
-            'xlabel'], yscale='log', xscale='log', legend=True, loc=6)
+            'xlabel'], legend=True, loc='upper left')
 plt.show()  # tplt.Show() moves overrides legend pos. for some reason.
 
 # Correlations

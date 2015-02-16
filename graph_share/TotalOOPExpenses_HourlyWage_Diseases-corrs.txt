@@ -1,0 +1,16 @@
+The correlation between HRWG31X and TOTSLF12 for HIEUIDX is   nan
+The correlation between HRWG31X and TOTSLF12 for DIABDX is -0.024718
+The correlation between HRWG31X and TOTSLF12 for ADHDADDX is -0.102493
+The correlation between HRWG31X and TOTSLF12 for HIBPDX is 0.035810
+The correlation between HRWG31X and TOTSLF12 for STRKDX is -0.010392
+The correlation between HRWG31X and TOTSLF12 for BMINDX53 is   nan
+The correlation between HRWG31X and TOTSLF12 for CHDDX is 0.080754
+The correlation between HRWG31X and TOTSLF12 for BPMLDX is 0.047025
+The correlation between HRWG31X and TOTSLF12 for CANCERDX is 0.074400
+The correlation between HRWG31X and TOTSLF12 for CHOLDX is 0.068872
+The correlation between HRWG31X and TOTSLF12 for MIDX is 0.113743
+The correlation between HRWG31X and TOTSLF12 for ARTHDX is 0.055028
+The correlation between HRWG31X and TOTSLF12 for ASTHDX is 0.039189
+The correlation between HRWG31X and TOTSLF12 for OHRTDX is 0.079816
+The correlation between HRWG31X and TOTSLF12 for EMPHDX is 0.296369
+The correlation between HRWG31X and TOTSLF12 for ANGIDX is 0.050332
