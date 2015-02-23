@@ -34,6 +34,7 @@ for diagnosis in diagnoses:
 num_sets = len(groups)
 
 colors = cm.jet(np.linspace(0, 1, num_sets))
+print colors
 
 for data, c in zip(groups, colors):
     tplt.Scatter(data['x'], data['y'], color=c, label=data['name'])
