@@ -33,13 +33,14 @@ def runmedianexperiment(indata):
 def meanestimator(variable, dataframe):
     """For a normally distributed variable from a dataframe,
     estimates the population mean"""
+    print 'Sample Mean Estimation'
     dse = dataframe[variable]
     clser = cleanseries(dse)    # Clean dataseries of error codes
     smean = clser.mean()  # Compute sample mean of variable
     # showhist(clser)
     print smean
     expres = []
-    for i in xrange(10000):
+    for i in xrange(50000):
         expres.append(runmeanexperiment(clser))
     # Plot Variable CDF
     tplt.Figure()
@@ -51,24 +52,25 @@ def meanestimator(variable, dataframe):
     expscdf = ts2.Cdf(expres)
     tplt.Cdf(expscdf)
     tplt.Config(title="%s Experimental Mean CDF" % variable)
-    print expscdf.ConfidenceInterval()
+    print '90 pct. Confidence Interval: ' + str(expscdf.ConfidenceInterval())
+    print 'Standard Error: %.4f' % ts2.Std(expres)
     # Plot normal probability plot
     tplt.Figure()
     ts2.NormalProbabilityPlot(expres)
     tplt.Config(title="Normal Probability Plot of %s Mean Estimation" % variable)
 
 
-
 def medianestimator(variable, dataframe):
     """For a normally distributed variable from a dataframe,
     estimates the population median"""
+    print 'Sample Median Estimation'
     dse = dataframe[variable]
     clser = cleanseries(dse)    # Clean dataseries of error codes
     smedian = clser.median()  # Compute sample median of variable
     # showhist(clser)
     print smedian
     expres = []
-    for i in xrange(10000):
+    for i in xrange(50000):
         expres.append(runmedianexperiment(clser))
     # Plot Variable CDF
     tplt.Figure()
@@ -80,18 +82,20 @@ def medianestimator(variable, dataframe):
     expscdf = ts2.Cdf(expres)
     tplt.Cdf(expscdf)
     tplt.Config(title="%s Experimental Median CDF" % variable)
-    print expscdf.ConfidenceInterval()
+    print '90 pct. Confidence Interval: ' + str(expscdf.ConfidenceInterval())
+    print 'Standard Error: %.4f' % ts2.Std(expres)
     # Plot normal probability plot
     tplt.Figure()
     ts2.NormalProbabilityPlot(expres)
     tplt.Config(title="Normal Probability Plot of %s Median Estimation" % variable)
 
+
 def main():
     h155 = DataSet('h155.pkl')
     df = h155.df
-    meanestimator('EMPHAGED', df)
-    medianestimator('EMPHAGED', df)
-    tplt.Show()
+    meanestimator('STRKAGED', df)
+    medianestimator('STRKAGED', df)
+    plt.show(block=True)
 
 if __name__ == '__main__':
     main()
