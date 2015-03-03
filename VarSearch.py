@@ -36,9 +36,9 @@ def search_vars(vartype, vars):
     return var_matches
 
 def main():
-    dset = DataSet.DataSet('h155.pkl')        #loads dataset, list of variables in dataset as list of strings
-    vars = dset.varnames
-    print search_vars('age of diagnosis', vars)       #searches through the HC-155 dataset for age of diagnosis variables
+    dset = DataSet.DataSet('h155.pkl')                  #loads dataset
+    vars = dset.varnames                                #list of variables in dataset as list of strings
+    print search_vars('age of diagnosis', vars)         #searches through the HC-155 dataset for age of diagnosis variables
 
 
 if __name__ == '__main__':
