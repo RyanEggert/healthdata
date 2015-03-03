@@ -9,7 +9,7 @@ from numpy.random import choice
 def showhist(series):
     """Given a pandas data series, plots histogram.
     """
-    tplt.Hist(ts2.Hist(series))
+    tplt.Hist(ts2.Hist(series), label='histogram')
 
 
 def cleanseries(series):
