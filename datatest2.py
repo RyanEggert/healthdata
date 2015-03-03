@@ -10,7 +10,7 @@ H155 = DataSet.DataSet('h155.pkl')
 df = H155.df
 print df.shape
 
-dfr = df[df['INSCOPE'] == 1]
+dfr = df[df['INSCOPE'] == ]
 print dfr.shape
 
 c1 = choice(H155.varnames.keys())
