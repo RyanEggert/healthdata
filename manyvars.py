@@ -13,7 +13,7 @@ def getkey(item):
     return item[0]
 
 
-dependentvariable = 'EMPHAGED'
+dependentvariable = 'OBVEXP12'
 # explanatoryvariables = 'EMPHAGED'
 
 h155 = DataSet('h155.pkl')
@@ -59,5 +59,5 @@ t_sort = sorted(t, key=getkey, reverse=True)
 # print type(rsquareds)
 print max(rsquareds), min(rsquareds)
 print t_sort
-with open('datamining1.txt', 'wb+') as textfile:
+with open('datamining_%s_%s.txt' % (h155.name, dependentvariable), 'wb+') as textfile:
     textfile.writelines(str(t_sort))
