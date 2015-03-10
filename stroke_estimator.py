@@ -57,7 +57,8 @@ def meanestimator(variable, dataframe):
     # Plot normal probability plot
     tplt.Figure()
     ts2.NormalProbabilityPlot(expres)
-    tplt.Config(title="Normal Probability Plot of %s Mean Estimation" % variable)
+    tplt.Config(
+        title="Normal Probability Plot of %s Mean Estimation" % variable)
 
 
 def medianestimator(variable, dataframe):
@@ -87,7 +88,8 @@ def medianestimator(variable, dataframe):
     # Plot normal probability plot
     tplt.Figure()
     ts2.NormalProbabilityPlot(expres)
-    tplt.Config(title="Normal Probability Plot of %s Median Estimation" % variable)
+    tplt.Config(
+        title="Normal Probability Plot of %s Median Estimation" % variable)
 
 
 def main():
