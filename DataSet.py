@@ -8,6 +8,7 @@ import time
 import requests
 from urllib import quote_plus
 import json
+from time import sleep
 
 from config import auth
 import dataio as dio
@@ -130,7 +131,20 @@ class Variable(object):
         headers = {'content-type': 'application/json'}  # POST headers
         lookup = {"input": {"webpage/url": "http://meps.ahrq.gov/mepsweb/data_stats/download_data_files_codebook.jsp?PUFId=%s&varName=%s" %
                             (self.dataset.upper(), self.abbv.upper())}}  # MEPS link to parse
-        req = requests.post(plink, data=json.dumps(lookup), headers=headers)
+        moveon = False
+        errcounter = 0
+        while moveon is False:
+            try:
+                req = requests.post(
+                    plink, data=json.dumps(lookup), headers=headers)
+            except e:
+                print 'Retry Request... (%s, %s)' % (self.dataset.upper(), self.abbv.upper())
+                sleep(1.5)
+                errcounter += 1
+                if errcounter > 5:
+                    moveon = True
+            else:
+                moveon = True
 
         try:
             # Store JSON response as python data structures.
@@ -154,8 +168,8 @@ class Variable(object):
 
 
 def regeneratefullcache():
-    dsets = ['h152a', 'h152b', 'h152c', 'h152d', 'h152e', 'h152f', 'h152g',
-             'h152h', 'h155', 'h156']  # Ignore appendices h152if1 & h152if2
+    dsets = ['h150', 'h152a', 'h152b', 'h152c', 'h152d', 'h152e', 'h152f', 'h152g',
+             'h152h', 'h154', 'h155', 'h156']  # Ignore appendices h152if1 & h152if2
     for dset in dsets:
         print 'Generating cache for %s...' % dset.upper()
         newobj = DataSet(dset + '.pkl', True)
@@ -168,5 +182,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    # regeneratefullcache()
+    # main()
+    regeneratefullcache()
