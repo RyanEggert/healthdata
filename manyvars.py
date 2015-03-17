@@ -13,7 +13,7 @@ def getkey(item):
     return item[0]
 
 
-dependentvariable = 'OBVEXP12'
+dependentvariable = 'TOTSLF12'
 # explanatoryvariables = 'EMPHAGED'
 
 h155 = DataSet('h155.pkl')

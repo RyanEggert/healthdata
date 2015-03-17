@@ -59,5 +59,5 @@ t_sort = sorted(t, key=getkey, reverse=True)
 # print type(rsquareds)
 print max(rsquareds), min(rsquareds)
 print t_sort
-with open('datamining_%s.txt'%(, 'wb+') as textfile:
+with open('datamining/datamining_%s.txt'%(, 'wb+') as textfile:
     textfile.writelines(str(t_sort))
