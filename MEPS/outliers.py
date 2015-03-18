@@ -13,11 +13,15 @@ def identifyoutliers(dataset, variablename, highrange=10, lowrange=10):
     "lowrange" and "highrange" specify percent ranges of outliers. (e.g.
     lowrange=5 will return the lowest 5% of data in the low outliers set.)
     """
-    # Create histogram
+    # Create Series & remove error codes
+    ds = dataset[variablename][dataset[variablename] > 0]
 
     # Find value of lowrange-th percentile
+    lowperc = ds.quantile(lowrange/100.)
+    highperc = ds.quantile(highrange/100.)
 
     # Identify all points in 0-lowrange percentiles.
+
 
     pass
 
