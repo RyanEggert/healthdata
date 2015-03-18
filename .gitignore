@@ -54,10 +54,11 @@ docs/_build/
 target/
 
 # Raw data folder
-/Data/***/
-/thinkplot.py
-/thinkstats2.py
-/config.py
-/dataset_store
-/test*.py
-/graphs
+MEPS/Data/***/
+MEPS/thinkplot.py
+MEPS/thinkstats2.py
+MEPS/config.py
+MEPS/dataset_store
+MEPS/experiments/*_ig.py
+MEPS/graphs
+authentications.py

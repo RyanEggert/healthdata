@@ -10,15 +10,16 @@ from urllib import quote_plus
 import json
 from time import sleep
 
-from config import auth
 import dataio as dio
+from ..configuration import authentications as auths
+auth = auths.auth
 
 
 def DataSet(picklefilename, new=False):
     """Function masquerading as Class.
     If new = True, we create a new object. This involves retrieving information
     from the internet. If new = False, we look for a cached copy of the
-    DataSet_ object
+    _DataSet_ object
     """
     if not new:
         try:
@@ -32,18 +33,18 @@ def DataSet(picklefilename, new=False):
         else:
             return existobj     # Return unpickled object
     else:
-        dset = DataSet_(picklefilename)
+        dset = _DataSet_(picklefilename)
         return dset
 
 
-class DataSet_(object):
+class _DataSet_(object):
 
     """Creates a DataSet object for a MEPS dataset and uses Dill
     to store the result for future use.
     """
 
     def __init__(self, picklefilename):
-        super(DataSet_, self).__init__()
+        super(_DataSet_, self).__init__()
         self.originpickle = picklefilename
         # Just the original dataset name (e.g. "h155", "h152a", etc.)
         self.name = picklefilename[:5].rstrip('_.')
@@ -176,11 +177,11 @@ def regeneratefullcache():
 
 
 def main():
-    # Opens the h152 DataSet object from its cached pickle.
+    # Opens the h155 DataSet object from its cached pickle.
     dset = DataSet('h155.pkl')
     print len(dset.varnames)
 
 
 if __name__ == '__main__':
-    # main()
-    regeneratefullcache()
+    main()
+    # regeneratefullcache()

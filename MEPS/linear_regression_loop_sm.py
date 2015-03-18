@@ -1,8 +1,9 @@
-from DataSet import DataSet
 import pandas as pd
-import thinkstats2 as ts2
-import thinkplot as tplt
 import statsmodels.formula.api as smf
+
+from meps.data import DataSet
+import meps.think.stats2 as ts2
+import meps.think.plot as tplt
 
 
 def listfmla(variables):
@@ -13,7 +14,7 @@ def getkey(item):
     return item[0]
 
 
-dependentvariable = 'OBVEXP12'
+dependentvariable = 'TOTSLF12'
 # explanatoryvariables = 'EMPHAGED'
 
 h155 = DataSet('h155.pkl')
@@ -28,7 +29,7 @@ rsquareds = []
 
 for index, name in enumerate(join.columns):
     if index % 100 == 0:
-        print '%s: Variable %d of %d.' % (name, index+1, len(join.columns))
+        print '%s: Variable %d of %d.' % (name, index + 1, len(join.columns))
 
     try:
         joinclean = join[(join[name] > -1) & (join[dependentvariable] > -1)]
@@ -41,7 +42,7 @@ for index, name in enumerate(join.columns):
 
         formula = dependentvariable + ' ~ ' + name
         model = smf.ols(formula, data=joinclean)
-        if model.nobs < len(joinclean)/2:
+        if model.nobs < len(joinclean) / 2:
             continue
 
         results = model.fit()

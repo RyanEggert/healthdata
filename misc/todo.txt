@@ -1,0 +1,24 @@
+
+
+scikit regressions ("ridgeCV" -- sophia)
+    categorical variables?
+pandas --> scikit
+scikit PCA
+scikit clustering
+
+Look for variables across datasets
+    Look for variables to exclude/vars to keep
+    Whichever is easier--when in doubt, include.
+    Look at non- HC155 sets,
+        Summarize elements of emergency room visits and/or
+        drugs datasets in per-person columns which can be
+        added to HC155, etc.
+    Errors & missing...
+
+
+Journals? Ask tuesday what we need
+    Journals are an accurate representation of journals
+    Journals are not an accurate representation of project.
+Journal: Regression section.
+
+

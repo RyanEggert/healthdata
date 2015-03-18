@@ -1,8 +1,9 @@
-from DataSet import DataSet
 import pandas as pd
-import thinkstats2 as ts2
-import thinkplot as tplt
 import statsmodels.formula.api as smf
+
+from meps.data import DataSet
+import meps.think.stats2 as ts2
+import meps.think.plot as tplt
 
 
 def listfmla(variables):
@@ -59,5 +60,5 @@ t_sort = sorted(t, key=getkey, reverse=True)
 # print type(rsquareds)
 print max(rsquareds), min(rsquareds)
 print t_sort
-with open('datamining_%s.txt'%(, 'wb+') as textfile:
+with open('datamining/datamining_%s.txt'%(, 'wb+') as textfile:
     textfile.writelines(str(t_sort))

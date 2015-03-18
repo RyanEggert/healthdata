@@ -1,0 +1,19 @@
+ridge regression
+scikit learn "ridge model"
+
+
+split your data into two sets
+train on one set
+use to try and predict second. Evaluate predictive performance
+
+traintestsplit() in scikit learn
+.fit() on one
+.score()
+
+dimensionality reduction
+principle component analysis
+
+maniforld learning
+
+add interactions/multiplications to regressions
+
