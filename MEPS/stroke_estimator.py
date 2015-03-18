@@ -1,9 +1,10 @@
-from DataSet import DataSet
-import thinkstats2 as ts2
-import thinkplot as tplt
 from matplotlib import pyplot as plt
 import numpy as np
 from numpy.random import choice
+
+from meps.data import DataSet
+import meps.think.stats2 as ts2
+import meps.think.plot as tplt
 
 
 def showhist(series):

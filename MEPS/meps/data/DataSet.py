@@ -44,7 +44,7 @@ class _DataSet_(object):
     """
 
     def __init__(self, picklefilename):
-        super(DataSet_, self).__init__()
+        super(_DataSet_, self).__init__()
         self.originpickle = picklefilename
         # Just the original dataset name (e.g. "h155", "h152a", etc.)
         self.name = picklefilename[:5].rstrip('_.')

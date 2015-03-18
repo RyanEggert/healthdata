@@ -1,11 +1,12 @@
 # scattermaker.py
-import thinkstats2 as ts2
-import thinkplot as tplt
-from DataSet import DataSet
 import pandas as pd
 import numpy as np
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
+
+from meps.data import DataSet
+import meps.think.stats2 as ts2
+import meps.think.plot as tplt
 
 from VarSearch import search_vars
 
