@@ -16,8 +16,7 @@ def cleanerrs(dataframe, variable, exclude=False):
         exclist = exclude
 
     replcodes = list(set(errcodes) - set(exclist))
-    for code in replcodes:
-        dataframe = clean(dataframe, variable, code)
+    dataframe = clean(dataframe, variable, replcodes)
     return dataframe
 
 
