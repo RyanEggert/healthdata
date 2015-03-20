@@ -1,4 +1,5 @@
 # outliers.py
+from operator import itemgetter
 
 from meps.data import DataSet
 import meps.think.stats2 as ts2
@@ -49,6 +50,37 @@ def identifyoutliers(dataframe, variablename, lowrange=10, highrange=10):
             'percentile': highrange
         }
     }
+
+
+def findsimilarities(dataframe, checkvars):
+    """Takes a dataframe (from identifyoutliers()) of outliers and a list of
+    variables to be checked.
+    """
+    reslist = []
+    for var in checkvars:
+        this_series = dataframe[var]
+        this_std = this_series.std()
+        # Number of NaNs:
+        # ...
+
+
+        this_info = {
+            'std': this_std
+        }
+        reslist.append(this_info)
+
+    # sort reslist
+    outlist = sorted(reslist, key=itemgetter('std'), reverse=True)
+    return outlist
+
+
+def analyzeoutliers(dataframe, variablename):
+    outliers = identifyoutliers(dataframe, variablename)
+    # Make list of low and high outlier dataframes
+    lhdf = [outliers['low']['df'], outliers['high']['df']]
+    for outlierset in lhdf:
+        ranked = findsimilarities(outlierset)
+    # Work in progress...
 
 
 def main():
