@@ -4,7 +4,7 @@ from operator import itemgetter
 from meps.data import DataSet
 import meps.think.stats2 as ts2
 import meps.think.plot as tplt
-from meps.data.cleaning.cleanerrs import cleanerrs
+from meps.data.cleaning.cleanerrs import cleanerrs, cleanallerrs
 
 import sklearn
 
@@ -56,16 +56,17 @@ def findsimilarities(dataframe, checkvars):
     """Takes a dataframe (from identifyoutliers()) of outliers and a list of
     variables to be checked.
     """
+    cleanframe = cleanallerrs(dataframe)
     reslist = []
     for var in checkvars:
-        this_series = dataframe[var]
+        this_series = cleanframe[var]
         this_std = this_series.std()
         # Number of NaNs:
-        # ...
-
+        this_nan = this_series.isnull().sum()
 
         this_info = {
-            'std': this_std
+            'std': this_std,
+            'NaNs': this_nan,
         }
         reslist.append(this_info)
 
@@ -74,13 +75,15 @@ def findsimilarities(dataframe, checkvars):
     return outlist
 
 
-def analyzeoutliers(dataframe, variablename):
+def analyzeoutliers(dataframe, variablename, checkvars):
     outliers = identifyoutliers(dataframe, variablename)
     # Make list of low and high outlier dataframes
     lhdf = [outliers['low']['df'], outliers['high']['df']]
+    results = []
     for outlierset in lhdf:
-        ranked = findsimilarities(outlierset)
-    # Work in progress...
+        ranked = findsimilarities(outlierset, checkvars)
+        results.append(ranked)
+    return results
 
 
 def main():
@@ -97,6 +100,10 @@ def main():
     print outliers['high']['size']
     print outliers['high']['range']
     print outliers['high']['percentile']
+    checkvars = ['ADDPRS42', 'ADHECR42', 'ADSMOK42', 'AGE12X', 'AIDHLP31',
+                 'AIDHLP53', 'AMCHIR12', 'OBCHIR12', 'AMNURS12', 'OBNURS12', 'AMOPTO12', 'OBOPTO12', 'AMASST12', 'OBASST12', 'AMTHER12', 'OBTHER12', 'OBTOTV12', 'OBDRV12', 'OBOTHV12', 'COGLIM31', 'COGLIM53', 'BLIND42', 'BMINDX53', 'DEAF42', 'EMPST31', 'EMPST42', 'EMPST53', 'EVRETIRE', 'FNGRDF31', 'FNGRDF53', 'HEARAD42', 'HSELIM31', 'HSELIM53', 'HYSTER53', 'MARRY12X', 'MILDIF31', 'MILDIF53', 'NOASPR53', 'NOFAT53', 'RCHDIF31', 'RCHDIF53', 'READNW42', 'RECPEP42', 'SEX', 'STNDIF31', 'STNDIF53', 'STOMCH53', 'STPDIF31', 'STPDIF53', 'TTLP12X', 'UNABLE31', 'UNABLE53', 'VISION42', 'WLK3MO31', 'WLK3MO53', 'WLKDIF31', 'WLKDIF53', 'WLKLIM31', 'WLKLIM53', 'WRGLAS42', 'WRKLIM31', 'WRKLIM53']
+
+    results = analyzeoutliers(h155, 'TOTEXP12', checkvars)
 
 if __name__ == '__main__':
     main()
