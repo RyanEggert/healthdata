@@ -8,19 +8,23 @@ from meps.data import DataSet
 import meps.think.stats2 as ts2
 import meps.think.plot as tplt
 
-from VarSearch import search_vars
+# from VarSearch import search_vars
 
 H155 = DataSet('h155.pkl')
 df = H155.df
 
-diagnoses = search_vars('diagnosis', H155.varnames)
-
-xvariable = 'OBTOTV12'
-xdescr = 'Number of office-based provider visits'
-yvariable = 'TOTSLF12'
-ydescr = 'Total Yearly Out-of-Pocket Healthcare Expenses'
+# diagnoses = search_vars('diagnosis', H155.varnames)
+diagnoses = ['NOASPR53', 'CHNEVER', 'OHRTAGED', 'CHDAGED', 'ADHECR42', 'ADSPRF42', 'ADILWW42' ]
 
 
+xvariable = 'AGE12X'
+xdescr = 'Age'
+yvariable = 'TOTEXP12'
+ydescr = 'Total Yearly Healthcare Expenses'
+
+
+# groups = [{'name': 'All', 'x': df[xvariable], 'y': df[yvariable], 'xname': xvariable,
+#             'yname': yvariable, 'xlabel': xdescr, 'ylabel': ydescr}]
 groups = []
 for diagnosis in diagnoses:
     afflicted = df[

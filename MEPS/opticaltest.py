@@ -5,6 +5,8 @@ from meps.data import DataSet
 import meps.think.stats2 as ts2
 import meps.think.plot as tplt
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from numpy import linspace as nplinspace
 
 
 def summarydict(vars):
@@ -85,12 +87,11 @@ tplt.Cdf(cdf, label="Expenses")
 tplt.Config(title="Eyewear Expenses of People who don't use Eyewear",
             xlabel="Expenses [ $ ]", ylabel="Cumulative Probability")
 tplt.Show()
-
-plt.pie([use_dict[key] for key in use_dict], shadow=True)
+colors = cm.jet(nplinspace(0, 1, len(use_dict)))
+plt.pie([use_dict[key] for key in use_dict], shadow=True, colors=colors)
 plt.axis('equal')
 plt.legend([labels[key] for key in labels], shadow=True, prop={'size': 10})
 plt.show()
-
 
 
 # Vision impairment characterization
