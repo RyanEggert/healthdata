@@ -9,9 +9,12 @@ import meps.think.plot as tplt
 
 
 dependent = 'TOTEXP12'
-#independents = ['BMINDX53', 'AGE12X', 'C(HIDEG)']
-independents = ['C(NOASPR53)', 'C(CHOLCK53)', 'OHRTAGED', 'CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)'] #, 'C(RTHLTH31)', 'AGE12X','DENTCK53', 'ADLIST42', 'C(RESPCT42)' 
-#'C(CHOLCK53)'
+    #WHOLE POPULATION
+#independents = ['OHRTAGED', 'CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)']
+    #HIGH CHOLESTEROL
+#independents = ['C(NOASPR53)', 'C(CHOLCK53)', 'OHRTAGED', 'CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)'] #, 'C(RTHLTH31)', 'AGE12X','DENTCK53', 'ADLIST42', 'C(RESPCT42)' 
+    #CORONARY HEART DISEASE
+independents = ['C(NOASPR53)', 'OHRTAGED','CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)']
 
 #including 'C(LANGPR42)' made R2 1, everything nan...what?
 
@@ -23,10 +26,8 @@ independents = ['C(NOASPR53)', 'C(CHOLCK53)', 'OHRTAGED', 'CHDAGED', 'C(ADHECR42
 
 
 #R2 went down from .64 to .51 when added 'ADEZUN42'
-#C(OHRTAGED) increases R2 to 
 
-#note: collinearity between AGE and HIDEG
-# explanatoryvariables = 'EMPHAGED'
+#note: collinearity warning with two heart-disease variables OHRTAGED and CHDAGED?
 
 h155 = DataSet('h155.pkl')
 df = h155.df
@@ -36,6 +37,7 @@ df = cleanallerrs(df)
 
 
 hichol = df[df.CHOLDX == 1]
+cheartd = df[df.CHDDX == 1]
 
 formula = dependent +  ' ~ ' + independents[0]
 
@@ -46,10 +48,13 @@ print formula
 
 model_all = smf.ols(formula, data=df)
 model_hichol = smf.ols(formula, data=hichol)
+model_cheartd = smf.ols(formula, data=cheartd)
 
 results_all = model_all.fit()
 results_hichol = model_hichol.fit()
+results_cheartd = model_cheartd.fit()
 
 #print results_all.rsquared
 #print results_hichol.rsquared
-print results_hichol.summary()
+print results_cheartd.summary()
+#print results_hichol.summary()
