@@ -33,9 +33,9 @@ def cleanallerrs(dataframe, exclude=False):
 
     replcodes = list(set(errcodes) - set(exclist))
 
-    dataframe.replace(replcodes, NaN)
+    outframe = dataframe.replace(replcodes, NaN)
 
-    return dataframe
+    return outframe
 
 
 # http://meps.ahrq.gov/mepsweb/data_stats/download_data/pufs/h155/h155doc.shtml
