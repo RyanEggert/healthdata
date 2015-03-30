@@ -45,7 +45,7 @@ for condition in conditions:
     tplt.Pmf(pmf_nocond, label=dependent + ', no ' + condition + ': ' + str(num_nocond))
     tplt.Config(xscale='log', yscale='log')
     tplt.Show()
-
+    
 
 #group = df[(df.CHOLDX == 1) & (df.CHOLCK53 == 5)]
 #print len(group['DUPERSID'].values)

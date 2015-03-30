@@ -21,27 +21,13 @@ independents = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)', 'ADAPPT42', 
 #perceived health -- what is it?
 #age + bmi or total prescriptions?
 
-
 #INSAT12X, INS12X
 #, ,   'BMINDX53'
 
+for var in independents:
+    
 
 
-    #CORONARY HEART DISEASE
-#independents = ['C(NOASPR53)', 'OHRTAGED','CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)']
-
-#including 'C(LANGPR42)' made R2 1, everything nan...what?
-
-#RESPCT42: Does provider ask about and show respect for medical, traditional, and alternative treatments that the person is happy with 
-#DECIDE42: Does provider ask the person to help make decisions between a choice of treatments (DECIDE42)
-#ADILWW42: SAQ 12 Mos: Got Care When Needed Ill/Inj
-#ADHECR42: SAQ 12 Mos: Rating of Health care
-#ADSPRF42: SAQ 12Mos: How Esy Getting Spec Referral IF needed to see a specialist
-
-
-#R2 went down from .64 to .51 when added 'ADEZUN42'
-
-#note: collinearity warning with two heart-disease variables OHRTAGED and CHDAGED?
 
 h155 = DataSet('h155.pkl')
 df = h155.df
@@ -59,6 +45,7 @@ df['RICH'] = df['POVCAT12'] ==5
 
 hichol = df[df.CHOLDX == 1]
 cheartd = df[df.CHDDX == 1]
+highbp = df[df.HIBPDX == 1]
 
 
 
@@ -72,10 +59,12 @@ print formula
 
 model_all = smf.ols(formula, data=df)
 model_hichol = smf.ols(formula, data=hichol)
+model_highbp = smf.ols(formula, data=highbp)
 #model_cheartd = smf.ols(formula, data=cheartd)
 
 results_all = model_all.fit()
 results_hichol = model_hichol.fit()
+results_highbp = model_highbp.fit()
 #results_cheartd = model_cheartd.fit()
 
 #print results_all.rsquared
