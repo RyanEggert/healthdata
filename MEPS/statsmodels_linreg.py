@@ -5,6 +5,7 @@ from meps.data.cleaning.cleanerrs import cleanerrs, cleanallerrs
 from meps.data import DataSet
 import meps.think.stats2 as ts2
 import meps.think.plot as tplt
+from vargraph import iscat, varin, vargraph
 
 
 
@@ -24,8 +25,8 @@ independents = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)', 'ADAPPT42', 
 #INSAT12X, INS12X
 #, ,   'BMINDX53'
 
-for var in independents:
-    
+
+
 
 
 
@@ -46,6 +47,14 @@ df['RICH'] = df['POVCAT12'] ==5
 hichol = df[df.CHOLDX == 1]
 cheartd = df[df.CHDDX == 1]
 highbp = df[df.HIBPDX == 1]
+
+
+for var in independents:
+    print (varin(var), dependent, iscat(var))
+    if varin(var) == 'ADAPPT42':
+        vargraph(hichol, varin(var), dependent, categorical=True, condition=False, log=True)
+    else:
+        vargraph(hichol, varin(var), dependent, categorical=iscat(var), condition=False, log=True)        
 
 
 
