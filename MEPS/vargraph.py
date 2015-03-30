@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from numpy import linspace, unique, array
+from numpy import transpose as nptranspose
 from scipy.stats import pearsonr
-# from meps.think.stats2 import Corr as pearsonr
 
+# from meps.think.stats2 import Corr as pearsonr
 
 
 def iscat(var):
@@ -154,7 +155,8 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
             y_ncond = dfncond[dependentvariable].values
             x = [x_ncond, x_cond]
             y = [y_ncond, y_cond]
-
+            print array(x_cond).shape, array(y_cond).shape
+            print array(x_ncond).shape, array(y_ncond).shape
             corr_ncond = pearsonr(array(x_ncond), array(y_ncond))
             corr_cond = pearsonr(array(x_cond), array(y_cond))
             labels = ['Yes, %s (r = %.4f, p = %.4f, sz = %d)' % (
@@ -164,7 +166,8 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
         else:
             x = [df[explanatoryvariable].values]
             y = [df[dependentvariable].values]
-            corr = pearsonr(array(x), array(y))
+            print nptranspose(array(x)).shape, nptranspose(array(y)).shape
+            corr = pearsonr(nptranspose(array(x)), nptranspose(array(y)))
             labels = ['r = %.4f, p = %d, sz = %d' % (corr[0], corr[1], len(x))]
 
         # Make scatterplot
@@ -196,8 +199,9 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
 def main():
     H155 = DataSet('h155.pkl')
     df = cleanallerrs(H155.df)
-    vargraph(df, 'AGE12X', 'TOTEXP12', categorical=False,
-             log=True, condition='EMPHDX')
+    df = df[df['CHOLDX'] == 1]
+    vargraph(df, 'IPNGTD12', 'TOTEXP12', categorical=False,
+             log=True, condition=False)
 
 if __name__ == '__main__':
     from meps.data import DataSet
