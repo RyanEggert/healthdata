@@ -109,10 +109,12 @@ def nameplot(ax, fig, dev, exv, condition=False, categorical=False):
                      (dev, exv, condition))
         fig.savefig('./graphs/vargraphs/%s_%s_%s.png' %
                     (dev, exv, condition), bbox_inches='tight')
+        fig.clf()
     else:
         ax.set_title('%s & %s' % (dev, exv))
         fig.savefig('./graphs/vargraphs/%s_%s.png' %
                     (dev, exv), bbox_inches='tight')
+        fig.clf()
 
 
 def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=False, condition=False, log=False):
@@ -184,7 +186,7 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
 def main():
     H155 = DataSet('h155.pkl')
     df = cleanallerrs(H155.df)
-    vargraph(df, 'RTHLTH31', 'TOTEXP12', categorical=True,
+    vargraph(df, 'AGE12X', 'TOTEXP12', categorical=False,
              log=True, condition='EMPHDX')
 
 if __name__ == '__main__':
