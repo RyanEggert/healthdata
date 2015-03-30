@@ -13,6 +13,16 @@ def iscat(var):
     return categorical
 
 
+def varin(var):
+    """If a categorical variable, returns just the variable name
+    (i.e. removes the "C(...)").
+    """
+    retvar = var
+    if iscat(var):
+        retvar = var[2:-1]
+    return retvar
+
+
 def logyrange(data):
     """Looks across all the datasets in data (a list of lists), and returns a
     minimum and a maximum for use in scaling a logarithmic axis."""
