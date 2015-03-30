@@ -94,6 +94,12 @@ def categplot(df, exv, dev, log=False, condition=False, dfcond=False, dfncond=Fa
     ax.set_xticklabels(xlabels)
     ax.set_xlabel('Categories of %s' % exv)
     ax.set_ylabel(dev)
+    if condition:
+        nameplot(ax, fig, dev,
+                 exv, condition=condition)
+    else:
+        nameplot(ax, fig, dev,
+                 exv)
 
 
 def nameplot(ax, fig, dev, exv, condition=False, categorical=False):
