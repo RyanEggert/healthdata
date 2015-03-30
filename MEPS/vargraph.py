@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-from numpy import linspace, unique
+from numpy import linspace, unique, array
+from scipy.stats import pearsonr
+# from meps.think.stats2 import Corr as pearsonr
+
 
 
 def iscat(var):
@@ -145,17 +148,24 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
     else:
         # Continuous Variable
         if condition:
-            x_cond = dfc[explanatoryvariable].values
-            x_ncond = dfnc[explanatoryvariable].values
-            y_cond = dfc[dependentvariable].values
-            y_ncond = dfnc[dependentvariable].values
+            x_cond = dfcond[explanatoryvariable].values
+            x_ncond = dfncond[explanatoryvariable].values
+            y_cond = dfcond[dependentvariable].values
+            y_ncond = dfncond[dependentvariable].values
             x = [x_ncond, x_cond]
             y = [y_ncond, y_cond]
-            labels = ['Yes, %s' % condition, 'No, %s' % condition]
+
+            corr_ncond = pearsonr(array(x_ncond), array(y_ncond))
+            corr_cond = pearsonr(array(x_cond), array(y_cond))
+            labels = ['Yes, %s (r = %.4f, p = %.4f, sz = %d)' % (
+                condition, corr_cond[0], corr_cond[1], len(x_cond)),
+                'No, %s (r = %.4f, p = %.4f, sz = %d)' % (
+                condition, corr_ncond[0], corr_ncond[1], len(x_ncond))]
         else:
             x = [df[explanatoryvariable].values]
             y = [df[dependentvariable].values]
-            labels = ['']
+            corr = pearsonr(array(x), array(y))
+            labels = ['r = %.4f, p = %d, sz = %d' % (corr[0], corr[1], len(x))]
 
         # Make scatterplot
         # Create a figure instance
