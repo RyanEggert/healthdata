@@ -3,6 +3,16 @@ import matplotlib.cm as cm
 from numpy import linspace, unique
 
 
+def iscat(var):
+    """Returns True if variable is categorical. Uses
+    statsmodels syntax.
+    """
+    categorical = False
+    if var[0:2] == 'C(':
+        categorical = True
+    return categorical
+
+
 def logyrange(data):
     """Looks across all the datasets in data (a list of lists), and returns a
     minimum and a maximum for use in scaling a logarithmic axis."""
@@ -24,6 +34,71 @@ def logyrange(data):
     return alldata_min, alldata_max
 
 
+def categplot(df, exv, dev, log=False, condition=False, dfcond=False, dfncond=False):
+    categories = sorted(df[exv].unique())
+    catdata = []
+    for cat in categories:
+        if condition:
+            # Select all of one category (w/condition)
+            this_sectc = dfcond[dfcond[exv] == cat]
+            # Select the dependent variable
+            this_depc = this_sectc[dev]
+            # Store this_depc in a list and append to master list of lists
+            this_cdata = this_depc.values
+            catdata.append(this_cdata)
+            # Select all of one category
+            this_sectnc = dfncond[dfncond[exv] == cat]
+            # Select the dependent variable
+            this_depnc = this_sectnc[dev]
+            # Store this_depnc in a list and append to master list of lists
+            this_ncdata = this_depnc.values
+            catdata.append(this_ncdata)
+        else:
+            # Select all of one category
+            this_sect = df[df[exv] == cat]
+            # Select the dependent variable
+            this_dep = this_sect[dev]
+            # Store this_dep in a list and append to master list of lists
+            this_data = this_dep.values
+            catdata.append(this_data)
+
+    # Create a figure instance
+    fig = plt.figure(1, figsize=(9, 6))
+    # Create an axes instance
+    ax = fig.add_subplot(111)
+    # Create the boxplot
+    bp = ax.boxplot(catdata, 0, '', 1, [25 - 15, 75 + 15])
+    if condition:
+        condcats = [str(x) + '_c' for x in categories]
+        ncondcats = [str(x) + '_nc' for x in categories]
+        comblists = ncondcats + condcats
+        comblists[::2] = ncondcats
+        comblists[1::2] = condcats
+        xlabels = comblists
+    else:
+        xlabels = categories
+
+    if log:
+        ax.set_yscale('log')
+        ax.set_ylim(logyrange(catdata))
+    ax.set_xticklabels(xlabels)
+    ax.set_xlabel('Categories of %s' % exv)
+    ax.set_ylabel(dev)
+
+
+def nameplot(ax, fig, dev, exv, condition=False, categorical=False):
+    # Save the figure
+    if condition:
+        ax.set_title('%s & %s by condition %s' %
+                     (dev, exv, condition))
+        fig.savefig('./graphs/vargraphs/%s_%s_%s.png' %
+                    (dev, exv, condition), bbox_inches='tight')
+    else:
+        ax.set_title('%s & %s' % (dev, exv))
+        fig.savefig('./graphs/vargraphs/%s_%s.png' %
+                    (dev, exv), bbox_inches='tight')
+
+
 def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=False, condition=False, log=False):
     """
     dataframe: Cleaned (Errors are NaN) DataFrame containing at least
@@ -43,58 +118,14 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
         dfncond = dfnc[[explanatoryvariable, dependentvariable]].dropna()
 
     if categorical:
-        # Find possible categories
-        categories = sorted(df[explanatoryvariable].unique())
-        catdata = []
-        for cat in categories:
-            if condition:
-                # Select all of one category (w/condition)
-                this_sectc = dfcond[dfcond[explanatoryvariable] == cat]
-                # Select the dependent variable
-                this_depc = this_sectc[dependentvariable]
-                # Store this_depc in a list and append to master list of lists
-                this_cdata = this_depc.values
-                catdata.append(this_cdata)
-                # Select all of one category
-                this_sectnc = dfncond[dfncond[explanatoryvariable] == cat]
-                # Select the dependent variable
-                this_depnc = this_sectnc[dependentvariable]
-                # Store this_depnc in a list and append to master list of lists
-                this_ncdata = this_depnc.values
-                catdata.append(this_ncdata)
-            else:
-                # Select all of one category
-                this_sect = df[df[explanatoryvariable] == cat]
-                # Select the dependent variable
-                this_dep = this_sect[dependentvariable]
-                # Store this_dep in a list and append to master list of lists
-                this_data = this_dep.values
-                catdata.append(this_data)
-
-        # Create a figure instance
-        fig = plt.figure(1, figsize=(9, 6))
-        # Create an axes instance
-        ax = fig.add_subplot(111)
-        # Create the boxplot
-        bp = ax.boxplot(catdata, 0, '', 1, [25 - 15, 75 + 15])
         if condition:
-            condcats = [str(x) + '_c' for x in categories]
-            ncondcats = [str(x) + '_nc' for x in categories]
-            comblists = ncondcats + condcats
-            comblists[::2] = ncondcats
-            comblists[1::2] = condcats
-            xlabels = comblists
+            categplot(df, explanatoryvariable, dependentvariable, log=log,
+                      condition=condition, dfcond=dfcond, dfncond=dfncond)
         else:
-            xlabels = categories
-
-        if log:
-            ax.set_yscale('log')
-            ax.set_ylim(logyrange(catdata))
-        ax.set_xticklabels(xlabels)
-        ax.set_xlabel('Categories of %s' % explanatoryvariable)
-        ax.set_ylabel(dependentvariable)
+            categplot(df, explanatoryvariable, dependentvariable, log=log)
 
     else:
+        # Continuous Variable
         if condition:
             x_cond = dfc[explanatoryvariable].values
             x_ncond = dfnc[explanatoryvariable].values
@@ -126,16 +157,12 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
         ax.set_xlabel(explanatoryvariable)
         ax.set_ylabel(dependentvariable)
 
-    # Save the figure
-    if condition:
-        ax.set_title('%s & %s by condition %s' %
-                     (dependentvariable, explanatoryvariable, condition))
-        fig.savefig('./graphs/vargraphs/%s_%s_%s.png' %
-                    (dependentvariable, explanatoryvariable, condition), bbox_inches='tight')
-    else:
-        ax.set_title('%s & %s' % (dependentvariable, explanatoryvariable))
-        fig.savefig('./graphs/vargraphs/%s_%s.png' %
-                    (dependentvariable, explanatoryvariable), bbox_inches='tight')
+        if condition:
+            nameplot(ax, fig, dependentvariable,
+                     explanatoryvariable, condition=condition)
+        else:
+            nameplot(ax, fig, dependentvariable,
+                     explanatoryvariable)
 
 
 def main():
