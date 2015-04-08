@@ -10,14 +10,23 @@ import numpy as np
 
 
 
-dependent = 'TOTEXP12'
+dependent = 'LOGTOTEXP'
 #dependent = 'LOGTOTEXP'
 
     #WHOLE POPULATION
 #independents = ['OHRTAGED', 'CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)']
     #HIGH CHOLESTEROL
-independents = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)',
-                'ADAPPT42', 'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)']
+independents = ['C(BADHLTH)', 'C(INS12X)', 'C(ARTHDX)','C(AIDHLP31)', 'C(COGLIM31)', 'C(ACTLIM31)', 'C(FEWCHECK)', 'C(DIABDX)', 
+'C(CANCERDX)', 'C(WRGLAS42)', 'C(GOODHC)', 'C(ANGIDX)', 'AGE12X', 'BMINDX53'] 
+
+#check53 can handle all values!!! awesome!
+
+#age12x 0.06 R^2 'AGE12X', 'BMINDX53',
+#bmindx53 0.01 R^2
+#rich very small R^2 increase
+
+
+#''ADAPPT42', , 'IPNGTD12' #cheating!
 
 #'C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 
 #'C(RESPECT)', 
@@ -45,6 +54,7 @@ df = h155.df
 df = cleanallerrs(df)
 
 df['BADHLTH'] = df['RTHLTH31'] >= 4
+df['BADMENT'] = df['MNHLTH31'] >= 4
 df['EXPHLTH'] = 10**(df['RTHLTH31']**2)
 df['PROBLEM'] = df['MDUNPR42'] == 1
 df['CHOLCKYR'] = df['CHOLCK53'] == 1
@@ -58,6 +68,10 @@ df['NODECIDE'] = df['DECIDE42'] == 1
 df['RESPECT'] = df['RESPCT42'] == 4
 df['NOCARE'] = df['ADILWW42'] == 1
 df['NOEASYCARE'] = df['ADEGMC42'] == 1
+
+df['HEARTDIS'] = ((df['OHRTDX']  + df['CHDDX'])) >= 1
+
+df['FEWCHECK'] = df['CHECK53'] >= 2
 
 
 #df['LOGTOTEXP'] = log10(df['TOTEXP12'])
@@ -77,7 +91,8 @@ highbp = df[df.HIBPDX == 1]
 #plotvars = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)', 'ADAPPT42', 
 #            'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)', 'RTHLTH31', 'C(NOFAT53)', 
 #            'C(CHOLCK53)', 'C(EXRCIS53)', 'C(PHYEXE53)', 'C(PHQ242)', 'C(DEPRESSED)', 'C(ADOVER42)', 'POVLEV12']
-plotvars = independents + ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 'C(RESPECT)', 'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)']
+#plotvars = independents + ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 'C(RESPECT)', 'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)']
+plotvars = []
 
 for var in plotvars:
     print (varin(var), dependent, iscat(var))
