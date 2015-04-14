@@ -5,14 +5,21 @@ from meps.data.cleaning.cleanerrs import cleanerrs, cleanallerrs
 from meps.data import DataSet
 import meps.think.stats2 as ts2
 import meps.think.plot as tplt
+import numpy as np
 
 h155 = DataSet('h155.pkl')
 df = h155.df
 df = cleanallerrs(df)
 
-dependent = 'TOTEXP12'
 
-conditions = ['ADHDADDX', 'ANGIDX', 'ARTHDX', 'ASTHDX', 'BPMLDX', 'CANCERDX', 'CHDDX', 'CHOLDX', 'DIABDX', 'EMPHDX', 'HIBPDX', 'MIDX', 'OHRTDX', 'STRKDX']
+
+df['LOGTOTEXP'] = np.log10(df['TOTEXP12']).replace([np.inf, -np.inf], np.nan)
+df['LOGTOTEXP'].dropna()
+
+dependent = 'LOGTOTEXP'
+
+#conditions = ['ADHDADDX', 'ANGIDX', 'ARTHDX', 'ASTHDX', 'BPMLDX', 'CANCERDX', 'CHDDX', 'CHOLDX', 'DIABDX', 'EMPHDX', 'HIBPDX', 'MIDX', 'OHRTDX', 'STRKDX']
+conditions=['CHOLDX']
 
 cdf = ts2.Cdf(df[dependent])
 tplt.Cdf(cdf, label=dependent+' CDF')
@@ -38,12 +45,12 @@ for condition in conditions:
 
     tplt.Cdf(cdf_cond, label=dependent + ' with ' + condition + ': ' + str(num_cond))
     tplt.Cdf(cdf_nocond, label=dependent + ', no ' + condition + ': ' + str(num_nocond))
-    tplt.Config(xscale='log')
+    #tplt.Config(xscale='log')
     tplt.Show()
 
     tplt.Pmf(pmf_cond, label=dependent + ' with ' + condition + ': ' + str(num_cond))
     tplt.Pmf(pmf_nocond, label=dependent + ', no ' + condition + ': ' + str(num_nocond))
-    tplt.Config(xscale='log', yscale='log')
+    #tplt.Config(xscale='log', yscale='log')
     tplt.Show()
     
 

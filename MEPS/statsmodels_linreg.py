@@ -76,7 +76,7 @@ df['FEWCHECK'] = df['CHECK53'] >= 2
 
 #df['LOGTOTEXP'] = log10(df['TOTEXP12'])
 
-df['LOGTOTEXP'] = np.log(df['TOTEXP12']).replace([np.inf, -np.inf], np.nan)
+df['LOGTOTEXP'] = np.log10(df['TOTEXP12']).replace([np.inf, -np.inf], np.nan)
 df['LOGTOTEXP'].dropna()
 #print df['LOGTOTEXP']
 
@@ -92,14 +92,17 @@ highbp = df[df.HIBPDX == 1]
 #            'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)', 'RTHLTH31', 'C(NOFAT53)', 
 #            'C(CHOLCK53)', 'C(EXRCIS53)', 'C(PHYEXE53)', 'C(PHQ242)', 'C(DEPRESSED)', 'C(ADOVER42)', 'POVLEV12']
 #plotvars = independents + ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 'C(RESPECT)', 'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)']
-plotvars = []
+plotvars = independents
 
 for var in plotvars:
     print (varin(var), dependent, iscat(var))
+    if(iscat(var)):
+        by_var = hichol.groupby(var[2:-1])
+        print(by_var.size())
     if varin(var) == 'ADAPPT42':
         vargraph(hichol, varin(var), dependent, categorical=True, condition=False, log=True)
     else:
-        vargraph(hichol, varin(var), dependent, categorical=iscat(var), condition=False, log=True)        
+        vargraph(hichol, varin(var), dependent, categorical=iscat(var), condition=False, log=False)        
 
 
 
