@@ -16,8 +16,11 @@ dependent = 'LOGTOTEXP'
     #WHOLE POPULATION
 #independents = ['OHRTAGED', 'CHDAGED', 'C(ADHECR42)', 'C(ADSPRF42)', 'C(ADILWW42)', 'C(DECIDE42)']
     #HIGH CHOLESTEROL
-independents = ['C(BADHLTH)', 'C(INS12X)', 'C(ARTHDX)','C(AIDHLP31)', 'C(COGLIM31)', 'C(ACTLIM31)', 'C(FEWCHECK)', 'C(DIABDX)', 
-'C(CANCERDX)', 'C(WRGLAS42)', 'C(GOODHC)', 'C(ANGIDX)', 'AGE12X', 'BMINDX53'] 
+#independents = ['C(BADHLTH)', 'C(INS12X)', 'C(ARTHDX)','C(AIDHLP31)', 'C(COGLIM31)', 'C(ACTLIM31)', 'C(DIABDX)', 
+#'C(CANCERDX)', 'C(WRGLAS42)', 'AGE12X', 'BMINDX53']  #'C(FEWCHECK)', 'C(GOODHC)', 
+
+independents = ['C(ACTLIM31)', 'C(AIDHLP31)','AGE12X','C(ARTHDX)', 'C(BADHLTH)','BMINDX53','C(CANCERDX)', 'C(COGLIM31)',  'C(DIABDX)', 'C(INS12X)',
+'C(WRGLAS42)' ]  #'C(FEWCHECK)', 'C(GOODHC)', 
 
 #check53 can handle all values!!! awesome!
 
@@ -44,6 +47,7 @@ independents = ['C(BADHLTH)', 'C(INS12X)', 'C(ARTHDX)','C(AIDHLP31)', 'C(COGLIM3
 #INSAT12X, INS12X
 #, ,   'BMINDX53'
 
+prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOEASYCARE)']
 
 
 
@@ -85,8 +89,8 @@ df['LOGTOTEXP'].dropna()
 #print len(group['DUPERSID'].values)
 
 hichol = df[df.CHOLDX == 1]
-cheartd = df[df.CHDDX == 1]
-highbp = df[df.HIBPDX == 1]
+#cheartd = df[df.CHDDX == 1]
+#highbp = df[df.HIBPDX == 1]
 
 #plotvars = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)', 'ADAPPT42', 
 #            'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)', 'RTHLTH31', 'C(NOFAT53)', 
@@ -114,17 +118,23 @@ for i in range(len(independents)-1):
 
 print formula
 
-model_all = smf.ols(formula, data=df)
+#model_all = smf.ols(formula, data=df)
 model_hichol = smf.ols(formula, data=hichol)
-model_highbp = smf.ols(formula, data=highbp)
+#model_highbp = smf.ols(formula, data=highbp)
 #model_cheartd = smf.ols(formula, data=cheartd)
 
-results_all = model_all.fit()
+#results_all = model_all.fit()
 results_hichol = model_hichol.fit()
-results_highbp = model_highbp.fit()
+#results_highbp = model_highbp.fit()
 #results_cheartd = model_cheartd.fit()
 
 #print results_all.rsquared
 #print results_hichol.rsquared
 #print results_cheartd.summary()
 print results_hichol.summary()
+
+for var in prov_mod:
+    formula_mod = formula + '+' + var
+    model_mod = smf.ols(formula_mod, data=hichol)
+    results_hichol_mod = model_mod.fit()
+    print formula_mod + '\n\n' + str(results_hichol_mod.summary())
