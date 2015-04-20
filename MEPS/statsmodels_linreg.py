@@ -20,7 +20,7 @@ dependent = 'LOGTOTEXP'
 #'C(CANCERDX)', 'C(WRGLAS42)', 'AGE12X', 'BMINDX53']  #'C(FEWCHECK)', 'C(GOODHC)', 
 
 independents = ['C(ACTLIM31)', 'C(AIDHLP31)','AGE12X','C(ARTHDX)', 'C(BADHLTH)','BMINDX53','C(CANCERDX)', 'C(COGLIM31)',  'C(DIABDX)', 'C(INS12X)',
-'C(WRGLAS42)' ]  #'C(FEWCHECK)', 'C(GOODHC)', 
+'C(WRGLAS42)']  #'C(FEWCHECK)', 'C(GOODHC)', 
 
 #check53 can handle all values!!! awesome!
 
@@ -47,8 +47,9 @@ independents = ['C(ACTLIM31)', 'C(AIDHLP31)','AGE12X','C(ARTHDX)', 'C(BADHLTH)',
 #INSAT12X, INS12X
 #, ,   'BMINDX53'
 
-prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOEASYCARE)']
-
+#prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOEASYCARE)'] 
+#'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)'
+prov_mod = ['C(NOLISTEN)', 'C(ENUFTIME)', 'C(HARDTOGET)', 'C(FEWDENTCHK)', 'C(OFFHOU42)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFAT53)']
 
 
 
@@ -72,6 +73,12 @@ df['NODECIDE'] = df['DECIDE42'] == 1
 df['RESPECT'] = df['RESPCT42'] == 4
 df['NOCARE'] = df['ADILWW42'] == 1
 df['NOEASYCARE'] = df['ADEGMC42'] == 1
+df['NOLISTEN'] = df['ADLIST42'] <= 2
+df['ENUFTIME'] = df['ADPRTM42'] >= 3
+df['HARDTOGET'] = df['DFTOUS42'] <= 2
+df['FEWDENTCHK'] = df['DENTCK53'] >= 3
+df['NOPHONE'] = df['PHNREG42'] <= 2
+df['NOAFTERHRS'] = df['AFTHOU42'] <= 2
 
 df['HEARTDIS'] = ((df['OHRTDX']  + df['CHDDX'])) >= 1
 
@@ -96,7 +103,7 @@ hichol = df[df.CHOLDX == 1]
 #            'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)', 'RTHLTH31', 'C(NOFAT53)', 
 #            'C(CHOLCK53)', 'C(EXRCIS53)', 'C(PHYEXE53)', 'C(PHQ242)', 'C(DEPRESSED)', 'C(ADOVER42)', 'POVLEV12']
 #plotvars = independents + ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 'C(RESPECT)', 'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)']
-plotvars = independents
+plotvars = independents + prov_mod
 
 for var in plotvars:
     print (varin(var), dependent, iscat(var))
@@ -134,6 +141,8 @@ results_hichol = model_hichol.fit()
 print results_hichol.summary()
 
 for var in prov_mod:
+    by_var = hichol.groupby(var[2:-1])
+    print(by_var.size())
     formula_mod = formula + '+' + var
     model_mod = smf.ols(formula_mod, data=hichol)
     results_hichol_mod = model_mod.fit()
