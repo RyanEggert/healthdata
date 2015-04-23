@@ -24,33 +24,11 @@ independents = ['C(ACTLIM31)', 'C(AIDHLP31)','AGE12X','C(ARTHDX)', 'C(BADHLTH)',
 
 #check53 can handle all values!!! awesome!
 
-#age12x 0.06 R^2 'AGE12X', 'BMINDX53',
-#bmindx53 0.01 R^2
-#rich very small R^2 increase
 
-
-#''ADAPPT42', , 'IPNGTD12' #cheating!
-
-#'C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 
-#'C(RESPECT)', 
-#'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)',  
-
-#, 'C(PHYEXE53)', 'C(DEPRESSED)', 'POVLEV12', 'C(RTHLTH31)', 'AGE12X','DENTCK53', 'ADLIST42', 'C(RESPCT42)' 'C(ADILWW42)', 'C(ADSPRF42)''BMINDX53', 'AGE12X', 
-#AGE12X and ARTHDX are interchangeable! Switched them out, had same R^2 value.     
-#None of the condition variables affect total cost aside from ARTHDX
-
-#what do all the numbers mean?
-#BMI relationship...what is it?
-#perceived health -- what is it?
-#age + bmi or total prescriptions?
-
-#INSAT12X, INS12X
-#, ,   'BMINDX53'
-
-#prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOEASYCARE)'] 
-#'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)', C(NOFLUSHT)
-prov_mod = ['C(NOLISTEN)', 'C(ENUFTIME)', 'C(HARDTOGET)', 'C(FEWDENTCHK)', 'C(OFFHOU42)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFAT53)', 'C(NOFLUSHT)']
-
+prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)',
+'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFLUSHT)']
+#prov_mod = ['C(NOLISTEN)', 'C(ENUFTIME)', 'C(HARDTOGET)', 'C(FEWDENTCHK)', 'C(OFFHOU42)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFAT53)', 'C(NOFLUSHT)', 'C(PROBLEMDNT)']
+#all_prov_mod = prov_mod + ['C(NOFAT53)', 'C(EXRCIS53)', 'C(ASPRIN53)', 'C(PSAYR)', 'C(HYSTER53)', 'C(PAPYR)']
 
 
 
@@ -58,52 +36,62 @@ h155 = DataSet('h155.pkl')
 df = h155.df
 df = cleanallerrs(df)
 
+#modified model vars
 df['BADHLTH'] = df['RTHLTH31'] >= 4
-df['BADMENT'] = df['MNHLTH31'] >= 4
-df['EXPHLTH'] = 10**(df['RTHLTH31']**2)
+
+#core healthcare quality/preventative care vars
 df['PROBLEM'] = df['MDUNPR42'] == 1
 df['CHOLCKYR'] = df['CHOLCK53'] == 1
-df['FEWCHOLCK'] = df['CHOLCK53'] >= 5
 df['BPCHKYR'] = df['BPCHEK53'] == 1
-df['RICH'] = df['POVCAT12'] ==5
-df['DEPRESSED'] = df['PHQ242']==6
 df['GOODHC'] = df['ADHECR42'] >=8
-df['BADHC'] = df['ADHECR42'] ==0
 df['NODECIDE'] = df['DECIDE42'] == 1
 df['RESPECT'] = df['RESPCT42'] == 4
-df['NOCARE'] = df['ADILWW42'] == 1
-df['NOEASYCARE'] = df['ADEGMC42'] == 1
-df['NOLISTEN'] = df['ADLIST42'] <= 2
 df['ENUFTIME'] = df['ADPRTM42'] >= 3
-df['HARDTOGET'] = df['DFTOUS42'] <= 2
 df['FEWDENTCHK'] = df['DENTCK53'] >= 3
 df['NOPHONE'] = df['PHNREG42'] <= 2
 df['NOAFTERHRS'] = df['AFTHOU42'] <= 2
 df['NOFLUSHT'] = df['FLUSHT53'] >= 5
 
-df['HEARTDIS'] = ((df['OHRTDX']  + df['CHDDX'])) >= 1
+#additional healthcare quality/preventative care vars
+df['FEWCHECK'] = df['CHECK53'] >= 2     #PREVENTATIVE
+df['PSAYR'] = df['PSA53'] == 1
+df['PAPYR'] = df['PAPSMR53'] == 1
+df['BRSTYR'] = df['BRSTEX53'] == 1
+df['MAMMOYR'] = df['MAMOGR53'] == 1
+df['STOOLYR'] = df['BSTST53'] == 1
+df['COLONOSYR'] = df['CLNTST53'] == 1
+df['SIGMOIDYR'] = df['SGMTST53'] == 1
+df['SEATBELT'] = df['SEATBE53'] == 1
 
-df['FEWCHECK'] = df['CHECK53'] >= 2
+df['HARDTOGET'] = df['DFTOUS42'] <= 2   #QUALITY
+df['PROBLEMDNT'] = df['DNUNPR42'] == 1
+df['NOLISTEN'] = df['ADLIST42'] <= 2
+df['LITTLECARE'] = df['ADILWW42'] <= 2
+df['FEWAPPT'] = df['ADRTWW42'] <= 2
+df['NOTEASY'] = df['ADEGMC42'] <= 2
+df['NOEXPLAIN'] = df['ADEXPL42'] <= 2
+df['NODRRESPCT'] = df['ADRESP42'] <= 2
+df['NOINSTRUC'] = df['ADINST42'] == 2
+df['NOUNDERST'] = df['ADEZUN42'] <= 2
+df['NODRDESC'] = df['ADTLHW42'] <= 2
+df['NOFORMHELP'] = df['ADFHLP42'] <= 2
+df['NOEZREF'] = df['ADSPRF42'] <= 2
+df['NOASKTREAT'] = df['TREATM42'] <= 2
+df['NOEXPLOPT'] = df['EXPLOP42'] <= 2
 
 
-#df['LOGTOTEXP'] = log10(df['TOTEXP12'])
+
+
+
 
 df['LOGTOTEXP'] = np.log10(df['TOTEXP12']).replace([np.inf, -np.inf], np.nan)
 df['LOGTOTEXP'].dropna()
-#print df['LOGTOTEXP']
 
 
-#group = df[(df.CHOLDX == 1) & (df.CHOLCK53 == 5)]
-#print len(group['DUPERSID'].values)
+
 
 hichol = df[df.CHOLDX == 1]
-#cheartd = df[df.CHDDX == 1]
-#highbp = df[df.HIBPDX == 1]
 
-#plotvars = ['C(BADHLTH)', 'C(INS12X)', 'IPNGTD12', 'C(ARTHDX)', 'ADAPPT42', 
-#            'AGE12X', 'BMINDX53', 'C(RICH)', 'C(COGLIM31)', 'RTHLTH31', 'C(NOFAT53)', 
-#            'C(CHOLCK53)', 'C(EXRCIS53)', 'C(PHYEXE53)', 'C(PHQ242)', 'C(DEPRESSED)', 'C(ADOVER42)', 'POVLEV12']
-#plotvars = independents + ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)', 'C(RESPECT)', 'C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)', 'C(NOCARE)', 'C(NOEASYCARE)']
 plotvars = independents + prov_mod
 
 for var in plotvars:
@@ -126,19 +114,10 @@ for i in range(len(independents)-1):
 
 print formula
 
-#model_all = smf.ols(formula, data=df)
+
+
 model_hichol = smf.ols(formula, data=hichol)
-#model_highbp = smf.ols(formula, data=highbp)
-#model_cheartd = smf.ols(formula, data=cheartd)
-
-#results_all = model_all.fit()
 results_hichol = model_hichol.fit()
-#results_highbp = model_highbp.fit()
-#results_cheartd = model_cheartd.fit()
-
-#print results_all.rsquared
-#print results_hichol.rsquared
-#print results_cheartd.summary()
 print results_hichol.summary()
 
 for var in prov_mod:
