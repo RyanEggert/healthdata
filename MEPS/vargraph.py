@@ -48,7 +48,7 @@ def logyrange(data):
     return alldata_min, alldata_max
 
 
-def categplot(df, exv, dev, log=False, condition=False, dfcond=False, dfncond=False):
+def categplot(df, exv, dev, log=False, catlabels=False, condition=False, dfcond=False, dfncond=False):
     categories = sorted(df[exv].unique())
     catdata = []
     for cat in categories:
@@ -83,8 +83,13 @@ def categplot(df, exv, dev, log=False, condition=False, dfcond=False, dfncond=Fa
     # Create the boxplot
     bp = ax.boxplot(catdata, 0, '', 1, [25 - 15, 75 + 15])
     if condition:
-        condcats = [str(x) + '_c' for x in categories]
-        ncondcats = [str(x) + '_nc' for x in categories]
+        if catlabels:
+            condcats = [str(x) + '_c' for x in condcats]
+            ncondcats = [str(x) + '_nc' for x in condcats]
+        else:
+            condcats = [str(x) + '_c' for x in categories]
+            ncondcats = [str(x) + '_nc' for x in categories]
+
         comblists = ncondcats + condcats
         comblists[::2] = ncondcats
         comblists[1::2] = condcats
@@ -121,7 +126,7 @@ def nameplot(ax, fig, dev, exv, condition=False, categorical=False):
         fig.clf()
 
 
-def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=False, condition=False, log=False):
+def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=False, catlabels=False, condition=False, log=False):
     """
     dataframe: Cleaned (Errors are NaN) DataFrame containing at least
     explanatoryvariable and dependentvariable.
@@ -142,9 +147,10 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
     if categorical:
         if condition:
             categplot(df, explanatoryvariable, dependentvariable, log=log,
-                      condition=condition, dfcond=dfcond, dfncond=dfncond)
+                      condition=condition, catlabels=catlabels, dfcond=dfcond, dfncond=dfncond)
         else:
-            categplot(df, explanatoryvariable, dependentvariable, log=log)
+            categplot(
+                df, explanatoryvariable, dependentvariable, catlabels=catlabels, log=log)
 
     else:
         # Continuous Variable
@@ -200,7 +206,7 @@ def main():
     H155 = DataSet('h155.pkl')
     df = cleanallerrs(H155.df)
     df = df[df['CHOLDX'] == 1]
-    vargraph(df, 'IPNGTD12', 'TOTEXP12', categorical=False,
+    vargraph(df, 'ARTHDX', 'TOTEXP12', categorical=True, catlabels=getattr(H155, 'IPNGTD12').responses,
              log=True, condition=False)
 
 if __name__ == '__main__':
