@@ -8,6 +8,8 @@ import meps.think.plot as tplt
 from vargraph import iscat, varin, vargraph
 import numpy as np
 
+import os
+
 
 
 dependent = 'LOGTOTEXP'
@@ -25,10 +27,14 @@ independents = ['C(ACTLIM31)', 'C(AIDHLP31)','AGE12X','C(ARTHDX)', 'C(BADHLTH)',
 #check53 can handle all values!!! awesome!
 
 
-prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)',
-'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFLUSHT)']
-#prov_mod = ['C(NOLISTEN)', 'C(ENUFTIME)', 'C(HARDTOGET)', 'C(FEWDENTCHK)', 'C(OFFHOU42)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFAT53)', 'C(NOFLUSHT)', 'C(PROBLEMDNT)']
-#all_prov_mod = prov_mod + ['C(NOFAT53)', 'C(EXRCIS53)', 'C(ASPRIN53)', 'C(PSAYR)', 'C(HYSTER53)', 'C(PAPYR)']
+#prov_mod = ['C(PHYEXE53)','C(CHOLCKYR)', 'C(BPCHKYR)','C(RESPECT)','C(NODECIDE)', 'C(GOODHC)', 'C(PROBLEM)',
+#'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 'C(NOFLUSHT)']
+prov_mod = ['C(PROBLEM)', 'C(CHOLCKYR)', 'C(BPCHKYR)', 'C(GOODHC)', 'C(NODECIDE)', 'C(RESPECT)', 'C(ENUFTIME)', 'C(FEWDENTCHK)', 'C(NOPHONE)', 'C(NOAFTERHRS)', 
+'C(NOFLUSHT)']
+
+all_prov_mod = prov_mod + ['C(FEWCHECK)', 'C(PSAYR)', 'C(PAPYR)', 'C(BRSTYR)', 'C(MAMMOYR)', 'C(STOOLYR)', 'C(COLONOSYR)', 'C(SIGMOIDYR)', 'C(SEATBELT)',  'C(HARDTOGET)', 'C(PROBLEMDNT)',
+'C(NOLISTEN)', 'C(LITTLECARE)', 'C(FEWAPPT)', 'C(NOTEASY)', 'C(NOEXPLAIN)', 'C(NODRRESPCT)', 'C(NOINSTRUC)', 'C(NOUNDERST)', 'C(NODRDESC)', 'C(NOFORMHELP)', 'C(NOEZREF)',
+'C(NOASKTREAT)','C(NOEXPLOPT)']
 
 
 
@@ -95,10 +101,10 @@ hichol = df[df.CHOLDX == 1]
 plotvars = independents + prov_mod
 
 for var in plotvars:
-    print (varin(var), dependent, iscat(var))
+    #print (varin(var), dependent, iscat(var))
     if(iscat(var)):
         by_var = hichol.groupby(var[2:-1])
-        print(by_var.size())
+        #print(by_var.size())
     if varin(var) == 'ADAPPT42':
         vargraph(hichol, varin(var), dependent, categorical=True, condition=False, log=True)
     else:
@@ -112,18 +118,31 @@ formula = dependent +  ' ~ ' + independents[0]
 for i in range(len(independents)-1):
     formula = formula + ' + ' + independents[i+1]
 
-print formula
+
 
 
 
 model_hichol = smf.ols(formula, data=hichol)
 results_hichol = model_hichol.fit()
-print results_hichol.summary()
+#print formula
+#print results_hichol.summary()
 
-for var in prov_mod:
+path = os.path.abspath("graphs/test")
+
+f = open(path, 'w')
+
+f.write(str(formula) + '\n')
+f.write(str(results_hichol.summary()))
+
+for var in all_prov_mod:
     by_var = hichol.groupby(var[2:-1])
-    print(by_var.size())
+    #print(by_var.size())
+    f.write('\n' + str(by_var.size()) + '\n')
+
     formula_mod = formula + '+' + var
     model_mod = smf.ols(formula_mod, data=hichol)
     results_hichol_mod = model_mod.fit()
-    print formula_mod + '\n\n' + str(results_hichol_mod.summary())
+    #print formula_mod + '\n\n' + str(results_hichol_mod.summary())
+    f.write(str(formula_mod + '\n\n' + str(results_hichol_mod.summary())))
+
+f.close()
