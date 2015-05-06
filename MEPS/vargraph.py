@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-from numpy import linspace, unique, array
+from numpy import linspace, unique, array, median
 from numpy import transpose as nptranspose
 from scipy.stats import pearsonr
 
@@ -81,6 +81,7 @@ def categplot(df, exv, dev, log=False, catlabels=False, condition=False, dfcond=
     # Create an axes instance
     ax = fig.add_subplot(111)
     # Create the boxplot
+
     bp = ax.boxplot(catdata, 0, '', 1, [25 - 15, 75 + 15])
     if condition:
         if catlabels:
@@ -109,6 +110,9 @@ def categplot(df, exv, dev, log=False, catlabels=False, condition=False, dfcond=
     else:
         nameplot(ax, fig, dev,
                  exv)
+    print 'Median Data for %s, %s:' % (exv, dev)
+    print xlabels
+    print [median(x) for x in catdata]
 
 
 def nameplot(ax, fig, dev, exv, condition=False, categorical=False):
@@ -185,6 +189,7 @@ def vargraph(dataframe, explanatoryvariable, dependentvariable, categorical=Fals
         colors = cm.rainbow(linspace(0, 1, len(x)))
         # Create the scatterplot
         for i, xsets in enumerate(x):
+            print 'wat'
             ax.scatter(
                 xsets, y[i], marker='o', alpha=0.5, lw=0, color=colors[i])
         if log:
