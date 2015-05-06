@@ -30,7 +30,6 @@ rsquareds = []
 for index, name in enumerate(join.columns):
     if index % 100 == 0:
         print '%s: Variable %d of %d.' % (name, index+1, len(join.columns))
-
     try:
         joinclean = join[(join[name] > -1) & (join[dependentvariable] > -1)]
     except:
@@ -60,5 +59,5 @@ t_sort = sorted(t, key=getkey, reverse=True)
 # print type(rsquareds)
 print max(rsquareds), min(rsquareds)
 print t_sort
-with open('datamining/datamining_%s.txt'%(, 'wb+') as textfile:
-    textfile.writelines(str(t_sort))
+# with open('datamining/datamining_%s.txt'%(, 'wb+') as textfile:
+#     textfile.writelines(str(t_sort))
